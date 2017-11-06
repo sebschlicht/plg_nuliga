@@ -1,0 +1,6 @@
+# generated files
+/.idea/
+plg_content_nuliga.zip
+
+# scripts
+/mkzip.sh
