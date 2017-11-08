@@ -9,28 +9,31 @@
 // No direct access to this file
 defined('JPATH_BASE') or die('Restricted access');
 
-/**
- * Formats a SQL date as a German date.
- *
- * @param $date string SQL date
- * @return string German date or original value on error
- */
-function formatDate($date)
+if (!function_exists('formatDate'))
 {
-    $dateTime = date_create($date);
-    return $dateTime ? $dateTime->format('d.m.Y') : $date;
-}
+    /**
+     * Formats a SQL date as a German date.
+     *
+     * @param $date string SQL date
+     * @return string German date or original value on error
+     */
+    function formatDate($date)
+    {
+        $dateTime = date_create($date);
+        return $dateTime ? $dateTime->format('d.m.Y') : $date;
+    }
 
-/**
- * Formats a SQL time without seconds.
- *
- * @param $date string SQL time
- * @return string SQL time without seconds or original value on error
- */
-function formatTime($time)
-{
-    $dateTime = DateTime::createFromFormat('H:i:s', $time);
-    return $dateTime ? $dateTime->format('H:i') : $time;
+    /**
+     * Formats a SQL time without seconds.
+     *
+     * @param $date string SQL time
+     * @return string SQL time without seconds or original value on error
+     */
+    function formatTime($time)
+    {
+        $dateTime = DateTime::createFromFormat('H:i:s', $time);
+        return $dateTime ? $dateTime->format('H:i') : $time;
+    }
 }
 
 ?>
