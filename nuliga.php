@@ -28,6 +28,11 @@ class PlgContentNuLiga extends JPlugin
     const PARAM_ID = 'id';
 
     /**
+     * @var com_nuliga model instance
+     */
+    protected static $model;
+
+    /**
      * Load the language file on instantiation. Note this is only available in Joomla 3.1 and higher.
      * If you want to support 3.0 series you must override the constructor
      *
@@ -69,11 +74,10 @@ class PlgContentNuLiga extends JPlugin
         $matches 		= array();
         $numMatches	= preg_match_all($regex_all, $row->text, $matches,PREG_OFFSET_CAPTURE | PREG_PATTERN_ORDER);
 
-        // initialize component helpers if necessary
+        // initialize if necessary
         if ($numMatches)
         {
-            $document = JFactory::getDocument();
-            $document->addStyleSheet(JUri::root() . 'media/plg_content_nuliga/css/nuliga.css');
+            JHtml::stylesheet('com_nuliga/nuliga.css', false, true, false);
         }
 
         // process plugin calls
@@ -90,29 +94,32 @@ class PlgContentNuLiga extends JPlugin
                 $nuliga_params[$values[0]] = $values[1];
             }
 
-            // render table
+            // load and render table
             if (array_key_exists($this::PARAM_ID, $nuliga_params))
             {
-                $id = $nuliga_params[$this::PARAM_ID];
-                $table = $this->loadNuLigaTable($id);
+                $table = $this->loadNuLigaTable($nuliga_params[$this::PARAM_ID]);
                 if ($table)
                 {
-                    $output = $table->title;
-
-                    // TODO render table via frontend model
-
-                    $row->text = preg_replace($regex_all, $output, $row->text, 1);
+                    $output = $this->renderNuLigaTable($table);
+                    if ($output)
+                    {
+                        $row->text = preg_replace($regex_all, $output, $row->text, 1);
+                    }
+                    else
+                    {
+                        // TODO when does this happen?
+                    }
                 }
                 else
                 {
-                    // add error if table unknown
+                    // error: table unknown
                     $app->enqueueMessage(JText::sprintf('PLG_CONTENT_NULIGA_ERROR_PARAM', $nuliga) . ' '
                         . JText::sprintf('PLG_CONTENT_NULIGA_TABLE_UNKNOWN', $nuliga_params[$this::PARAM_ID]), 'warning');
                 }
             }
             else
             {
-                // add error if table id missing
+                // error: table id param missing
                 $app->enqueueMessage(JText::sprintf('PLG_CONTENT_NULIGA_ERROR_PARAM', $nuliga) . ' '
                     . JText::sprintf('PLG_CONTENT_NULIGA_PARAM_MISSING', 'id'), 'error');
             }
@@ -124,16 +131,39 @@ class PlgContentNuLiga extends JPlugin
 	protected function loadNuLigaTable($id)
     {
         // load table via component model
-        $model = JModelLegacy::getInstance('NuLiga', 'NuLigaModel');
-        return $model->loadNuLigaTable($id);
-
-        // build table query
-        //$jtable = JTable::getInstance('NuLiga', 'NuLigaTable', array());
-        //return $jtable->load($id) ? $jtable : false;
+        return self::getModelInstance()->loadNuLigaTable($id);
     }
 
     protected function renderNuLigaTable($table)
     {
-        // TODO
+        // render stored remote data
+        $layout = new JLayoutFile('nuliga', JPATH_ROOT . '/plugins/content/nuliga/layouts');
+        $model = self::getModelInstance();
+
+        $items = ($table->type == 1) ? $model->getTeams() : $model->getMatches();
+        if ($items)
+        {
+            $displayData = array(
+                'type' => $table->type,
+                'items' =>  $items,
+                'highlight' => ['TS Bendorf', 'TS Bendorf II', 'TS Bendorf III']
+            );
+            return $layout->render($displayData);
+        }
+        else
+        {
+            // TODO error: failed to load teams/matches
+            return '';
+        }
+    }
+
+    protected static function getModelInstance()
+    {
+        // load a model instance, if necessary
+        if (empty(self::$model))
+        {
+            self::$model = JModelLegacy::getInstance('NuLiga', 'NuLigaModel');
+        }
+        return self::$model;
     }
 }

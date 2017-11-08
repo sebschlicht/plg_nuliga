@@ -9,7 +9,7 @@
     <authorEmail>admin@joomla.org</authorEmail>
     <authorUrl>www.joomla.org</authorUrl>
 
-    <version>0.0.14</version>
+    <version>0.0.20</version>
 
     <description>PLG_CONTENT_NULIGA_XML_DESCRIPTION</description>
 
@@ -18,18 +18,13 @@
         <filename>index.html</filename>
 
         <folder>language</folder>
+        <folder>layouts</folder>
     </files>
 
     <languages>
         <language tag="en-GB">language/en-GB/en-GB.plg_content_nuliga.ini</language>
         <language tag="en-GB">language/en-GB/en-GB.plg_content_nuliga.sys.ini</language>
     </languages>
-
-    <media destination="plg_content_nuliga" folder="media">
-        <filename>index.html</filename>
-
-        <folder>css</folder>
-    </media>
 
     <config>
         <fields name="params" />
