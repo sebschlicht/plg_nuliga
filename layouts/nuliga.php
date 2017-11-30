@@ -42,15 +42,15 @@ if (!function_exists('formatDate'))
         <?php if ($displayData['type'] == 1): ?>
             <table>
                 <tr>
-                    <th>Rang</th>
-                    <th>Mannschaft</th>
-                    <th>Begegnungen</th>
-                    <th>S</th>
-                    <th>U</th>
-                    <th>N</th>
-                    <th>Tore</th>
-                    <th>+/-</th>
-                    <th>Punkte</th>
+                    <th><?php echo JText::_('COM_NULIGA_NULIGA_LEAGUE_COLUMN_HEADER_RANK');?></th>
+                    <th><?php echo JText::_('COM_NULIGA_NULIGA_LEAGUE_COLUMN_HEADER_TEAM');?></th>
+                    <th><?php echo JText::_('COM_NULIGA_NULIGA_LEAGUE_COLUMN_HEADER_NUMMATCHES');?></th>
+                    <th><?php echo JText::_('COM_NULIGA_NULIGA_LEAGUE_COLUMN_HEADER_NUMWINS');?></th>
+                    <th><?php echo JText::_('COM_NULIGA_NULIGA_LEAGUE_COLUMN_HEADER_NUMDRAWS');?></th>
+                    <th><?php echo JText::_('COM_NULIGA_NULIGA_LEAGUE_COLUMN_HEADER_NUMLOSSES');?></th>
+                    <th><?php echo JText::_('COM_NULIGA_NULIGA_LEAGUE_COLUMN_HEADER_GOALS');?></th>
+                    <th><?php echo JText::_('COM_NULIGA_NULIGA_LEAGUE_COLUMN_HEADER_GOALDIFF');?></th>
+                    <th><?php echo JText::_('COM_NULIGA_NULIGA_LEAGUE_COLUMN_HEADER_POINTS');?></th>
                 </tr>
                 <?php foreach($displayData['items'] as $team): ?>
                     <tr<?php if (in_array($team->name, $displayData['highlight'])) echo ' class="highlight"'; ?>>
@@ -69,14 +69,14 @@ if (!function_exists('formatDate'))
         <?php elseif ($displayData['type'] == 2): ?>
             <table>
                 <tr>
-                    <th>Tag</th>
-                    <th>Datum</th>
-                    <th>Zeit</th>
-                    <th>Halle</th>
-                    <th>Nr.</th>
-                    <th>Heim</th>
-                    <th>Gast</th>
-                    <th>Tore</th>
+                    <th><?php echo JText::_('COM_NULIGA_NULIGA_MATCHES_COLUMN_HEADER_WEEKDAY');?></th>
+                    <th><?php echo JText::_('COM_NULIGA_NULIGA_MATCHES_COLUMN_HEADER_DATE');?></th>
+                    <th><?php echo JText::_('COM_NULIGA_NULIGA_MATCHES_COLUMN_HEADER_TIME');?></th>
+                    <th><?php echo JText::_('COM_NULIGA_NULIGA_MATCHES_COLUMN_HEADER_HALL');?></th>
+                    <th><?php echo JText::_('COM_NULIGA_NULIGA_MATCHES_COLUMN_HEADER_NULIGAID');?></th>
+                    <th><?php echo JText::_('COM_NULIGA_NULIGA_MATCHES_COLUMN_HEADER_HOME');?></th>
+                    <th><?php echo JText::_('COM_NULIGA_NULIGA_MATCHES_COLUMN_HEADER_GUEST');?></th>
+                    <th><?php echo JText::_('COM_NULIGA_NULIGA_MATCHES_COLUMN_HEADER_RESULT');?></th>
                 </tr>
                 <?php foreach($displayData['items'] as $match): ?>
                     <tr>

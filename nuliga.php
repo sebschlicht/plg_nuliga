@@ -50,6 +50,16 @@ class PlgContentNuLiga extends JPlugin
     protected $layout;
 
     /**
+     * Creates the NuLiga plugin while loading the component's language files.
+    */
+    function __construct(&$subject, $config) {
+      $lang = JFactory::getLanguage();
+      $lang->load( 'com_nuliga', JPATH_SITE );
+
+      parent::__construct($subject, $config);
+    }
+  
+    /**
      * Plugin that renders a NuLiga table from com_nuliga inside an article.
      *
      * @param   string   $context  The context of the content being passed to the plugin.

@@ -8,8 +8,12 @@
     <license>GNU General Public License version 2 or later; see LICENSE.txt</license>
     <authorEmail>admin@joomla.org</authorEmail>
     <authorUrl>www.joomla.org</authorUrl>
+  
+    <updateservers>
+        <server type="extension" name="NuLiga Extension Updates">http://dev.jablab.de/updates/plg_nuliga/extension.xml</server>
+    </updateservers>
 
-    <version>0.0.20</version>
+    <version>0.0.21</version>
 
     <description>PLG_CONTENT_NULIGA_XML_DESCRIPTION</description>
 
