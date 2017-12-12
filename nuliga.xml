@@ -13,7 +13,7 @@
         <server type="extension" name="NuLiga Extension Updates">http://dev.jablab.de/updates/plg_nuliga/extension.xml</server>
     </updateservers>
 
-    <version>0.0.23</version>
+    <version>0.0.24</version>
 
     <description>PLG_CONTENT_NULIGA_XML_DESCRIPTION</description>
 
@@ -28,6 +28,7 @@
     <languages>
         <language tag="en-GB">language/en-GB/en-GB.plg_content_nuliga.ini</language>
         <language tag="en-GB">language/en-GB/en-GB.plg_content_nuliga.sys.ini</language>
+        <language tag="de-DE">language/de-DE/de-DE.plg_content_nuliga.ini</language>
     </languages>
 
     <config>
