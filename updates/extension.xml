@@ -1,0 +1,16 @@
+<updates>
+    <update>
+        <name>NuLiga Beta Plugin</name>
+        <version>0.0.23</version>
+        <downloads>
+            <downloadurl type="full" format="zip">http://dev.jablab.de/updates/plg_nuliga/0.0.23/plg_content_nuliga.zip</downloadurl>
+        </downloads>
+        <targetplatform name="joomla" version="3.[0123456789]"/>
+        <element>nuliga</element>
+        <description/>
+        <type>plugin</type>
+        <folder>content</folder>
+        <maintainer>JabLab</maintainer>
+        <maintainerurl>http://www.jablab.de</maintainerurl>
+    </update>
+</updates>

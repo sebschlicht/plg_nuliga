@@ -119,8 +119,8 @@ class PlgContentNuLiga extends JPlugin
                     }
                     else
                     {
-                        // error: no items
-                        $app->enqueueMessage(JText::_('COM_NULIGA_NULIGA_EMPTY'), 'warning');
+                        // error: nothing to render
+                        $app->enqueueMessage(JText::_('COM_NULIGA_NULIGA_RENDERING_FAILURE'), 'warning');
                     }
                 }
                 else
