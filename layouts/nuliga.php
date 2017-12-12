@@ -9,39 +9,6 @@
 // No direct access to this file
 defined('JPATH_BASE') or die('Restricted access');
 
-if (!function_exists('formatDate'))
-{
-    /**
-     * Formats a SQL date as a German date.
-     *
-     * @param $date string SQL date
-     * @return string German date or original value on error
-     */
-    function formatDate($date)
-    {
-        if ($date == '0000-00-00') {
-          return 'Termin offen';
-        }
-        $dateTime = date_create($date);
-        return $dateTime ? $dateTime->format('d.m.Y') : $date;
-    }
-
-    /**
-     * Formats a SQL time without seconds.
-     *
-     * @param $date string SQL time
-     * @return string SQL time without seconds or original value on error
-     */
-    function formatTime($time)
-    {
-        if ($time == '00:00:00') {
-          return '';
-        }
-        $dateTime = DateTime::createFromFormat('H:i:s', $time);
-        return $dateTime ? $dateTime->format('H:i') : $time;
-    }
-}
-
 ?>
 <div class="nuliga">
     <?php if ($displayData['items']): ?>
@@ -86,9 +53,14 @@ if (!function_exists('formatDate'))
                 </tr>
                 <?php foreach($displayData['items'] as $match): ?>
                     <tr>
-                        <td><?php echo $match->weekday; ?></td>
-                        <td><?php echo formatDate($match->date); ?></td>
-                        <td><?php echo formatTime($match->time); ?></td>
+                        <?php $hasDate = !empty($match->weekday); ?>
+                        <?php if ($hasDate): ?>
+                            <td><?php echo $match->weekday; ?></td>
+                            <td><?php echo $match->date; ?></td>
+                            <td><?php echo $match->time; ?></td>
+                        <?php else: ?>
+                            <td colspan="3"><?php echo $match->date; ?></td>
+                        <?php endif; ?>
                         <td><?php echo $match->hall; ?></td>
                         <td><?php echo $match->nr; ?></td>
                         <td><?php echo $match->home; ?></td>
