@@ -19,6 +19,9 @@ if (!function_exists('formatDate'))
      */
     function formatDate($date)
     {
+        if ($date == '0000-00-00') {
+          return 'Termin offen';
+        }
         $dateTime = date_create($date);
         return $dateTime ? $dateTime->format('d.m.Y') : $date;
     }
@@ -31,6 +34,9 @@ if (!function_exists('formatDate'))
      */
     function formatTime($time)
     {
+        if ($time == '00:00:00') {
+          return '';
+        }
         $dateTime = DateTime::createFromFormat('H:i:s', $time);
         return $dateTime ? $dateTime->format('H:i') : $time;
     }
