@@ -13,7 +13,7 @@
         <server type="extension" name="NuLiga Extension Updates">http://dev.jablab.de/updates/plg_nuliga/extension.xml</server>
     </updateservers>
 
-    <version>0.0.26</version>
+    <version>0.0.27</version>
 
     <description>PLG_CONTENT_NULIGA_XML_DESCRIPTION</description>
 
