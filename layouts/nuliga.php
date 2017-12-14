@@ -59,7 +59,8 @@ defined('JPATH_BASE') or die('Restricted access');
                             <td class="pnlg-date"><?php echo $match->date; ?></td>
                             <td class="pnlg-time"><?php echo $match->time; ?></td>
                         <?php else: ?>
-                            <td class="pnlg-date" colspan="3"><?php echo $match->date; ?></td>
+                            <td class="pnlg-weekday"></td>
+                            <td class="pnlg-date" colspan="2"><?php echo $match->date; ?></td>
                         <?php endif; ?>
                         <td class="pnlg-hall"><?php echo $match->hall; ?></td>
                         <td class="pnlg-nuliga-id"><?php echo $match->nr; ?></td>
