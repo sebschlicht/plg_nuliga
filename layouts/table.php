@@ -15,15 +15,15 @@ defined('JPATH_BASE') or die('Restricted access');
         <?php if ($displayData['type'] == 1): ?>
             <table>
                 <tr>
-                    <th class="pnlg-rank"><?php echo JText::_('COM_NULIGA_NULIGA_LEAGUE_COLUMN_HEADER_RANK');?></th>
-                    <th class="pnlg-team"><?php echo JText::_('COM_NULIGA_NULIGA_LEAGUE_COLUMN_HEADER_TEAM');?></th>
-                    <th class="pnlg-num-matches"><?php echo JText::_('COM_NULIGA_NULIGA_LEAGUE_COLUMN_HEADER_NUMMATCHES');?></th>
-                    <th class="pnlg-num-wins"><?php echo JText::_('COM_NULIGA_NULIGA_LEAGUE_COLUMN_HEADER_NUMWINS');?></th>
-                    <th class="pnlg-num-draws"><?php echo JText::_('COM_NULIGA_NULIGA_LEAGUE_COLUMN_HEADER_NUMDRAWS');?></th>
-                    <th class="pnlg-num-losses"><?php echo JText::_('COM_NULIGA_NULIGA_LEAGUE_COLUMN_HEADER_NUMLOSSES');?></th>
-                    <th class="pnlg-goals"><?php echo JText::_('COM_NULIGA_NULIGA_LEAGUE_COLUMN_HEADER_GOALS');?></th>
-                    <th class="pnlg-goal-diff"><?php echo JText::_('COM_NULIGA_NULIGA_LEAGUE_COLUMN_HEADER_GOALDIFF');?></th>
-                    <th class="pnlg-points"><?php echo JText::_('COM_NULIGA_NULIGA_LEAGUE_COLUMN_HEADER_POINTS');?></th>
+                    <th class="pnlg-rank"><?php echo JText::_('COM_NULIGA_TABLE_LEAGUE_COLUMN_HEADER_RANK');?></th>
+                    <th class="pnlg-team"><?php echo JText::_('COM_NULIGA_TABLE_LEAGUE_COLUMN_HEADER_TEAM');?></th>
+                    <th class="pnlg-num-matches"><?php echo JText::_('COM_NULIGA_TABLE_LEAGUE_COLUMN_HEADER_NUMMATCHES');?></th>
+                    <th class="pnlg-num-wins"><?php echo JText::_('COM_NULIGA_TABLE_LEAGUE_COLUMN_HEADER_NUMWINS');?></th>
+                    <th class="pnlg-num-draws"><?php echo JText::_('COM_NULIGA_TABLE_LEAGUE_COLUMN_HEADER_NUMDRAWS');?></th>
+                    <th class="pnlg-num-losses"><?php echo JText::_('COM_NULIGA_TABLE_LEAGUE_COLUMN_HEADER_NUMLOSSES');?></th>
+                    <th class="pnlg-goals"><?php echo JText::_('COM_NULIGA_TABLE_LEAGUE_COLUMN_HEADER_GOALS');?></th>
+                    <th class="pnlg-goal-diff"><?php echo JText::_('COM_NULIGA_TABLE_LEAGUE_COLUMN_HEADER_GOALDIFF');?></th>
+                    <th class="pnlg-points"><?php echo JText::_('COM_NULIGA_TABLE_LEAGUE_COLUMN_HEADER_POINTS');?></th>
                 </tr>
                 <?php foreach($displayData['items'] as $team): ?>
                     <tr<?php if (in_array($team->name, $displayData['highlight'])) echo ' class="highlight"'; ?>>
@@ -42,14 +42,14 @@ defined('JPATH_BASE') or die('Restricted access');
         <?php elseif ($displayData['type'] == 2): ?>
             <table>
                 <tr>
-                    <th class="pnlg-weekday"><?php echo JText::_('COM_NULIGA_NULIGA_MATCHES_COLUMN_HEADER_WEEKDAY');?></th>
-                    <th class="pnlg-date"><?php echo JText::_('COM_NULIGA_NULIGA_MATCHES_COLUMN_HEADER_DATE');?></th>
-                    <th class="pnlg-time"><?php echo JText::_('COM_NULIGA_NULIGA_MATCHES_COLUMN_HEADER_TIME');?></th>
-                    <th class="pnlg-hall"><?php echo JText::_('COM_NULIGA_NULIGA_MATCHES_COLUMN_HEADER_HALL');?></th>
-                    <th class="pnlg-nuliga-id"><?php echo JText::_('COM_NULIGA_NULIGA_MATCHES_COLUMN_HEADER_NULIGAID');?></th>
-                    <th class="pnlg-home"><?php echo JText::_('COM_NULIGA_NULIGA_MATCHES_COLUMN_HEADER_HOME');?></th>
-                    <th class="pnlg-guest"><?php echo JText::_('COM_NULIGA_NULIGA_MATCHES_COLUMN_HEADER_GUEST');?></th>
-                    <th class="pnlg-result"><?php echo JText::_('COM_NULIGA_NULIGA_MATCHES_COLUMN_HEADER_RESULT');?></th>
+                    <th class="pnlg-weekday"><?php echo JText::_('COM_NULIGA_TABLE_MATCHES_COLUMN_HEADER_WEEKDAY');?></th>
+                    <th class="pnlg-date"><?php echo JText::_('COM_NULIGA_TABLE_MATCHES_COLUMN_HEADER_DATE');?></th>
+                    <th class="pnlg-time"><?php echo JText::_('COM_NULIGA_TABLE_MATCHES_COLUMN_HEADER_TIME');?></th>
+                    <th class="pnlg-hall"><?php echo JText::_('COM_NULIGA_TABLE_MATCHES_COLUMN_HEADER_HALL');?></th>
+                    <th class="pnlg-nuliga-id"><?php echo JText::_('COM_NULIGA_TABLE_MATCHES_COLUMN_HEADER_NULIGAID');?></th>
+                    <th class="pnlg-home"><?php echo JText::_('COM_NULIGA_TABLE_MATCHES_COLUMN_HEADER_HOME');?></th>
+                    <th class="pnlg-guest"><?php echo JText::_('COM_NULIGA_TABLE_MATCHES_COLUMN_HEADER_GUEST');?></th>
+                    <th class="pnlg-result"><?php echo JText::_('COM_NULIGA_TABLE_MATCHES_COLUMN_HEADER_RESULT');?></th>
                 </tr>
                 <?php foreach($displayData['items'] as $match): ?>
                     <tr>
@@ -72,6 +72,6 @@ defined('JPATH_BASE') or die('Restricted access');
             </table>
         <?php endif; ?>
     <?php else: ?>
-        <p><?php echo JText::_('COM_NULIGA_NULIGA_RENDERING_FAILURE');?></p>
+        <p><?php echo JText::_('COM_NULIGA_TABLE_RENDERING_FAILURE');?></p>
     <?php endif; ?>
 </div>

@@ -88,7 +88,7 @@ class PlgContentNuLiga extends JPlugin
         if ($numMatches)
         {
             JHtml::stylesheet('com_nuliga/nuliga.css', false, true, false);
-            $this->layout = new JLayoutFile('nuliga', JPATH_ROOT . '/plugins/content/nuliga/layouts');
+            $this->layout = new JLayoutFile('table', JPATH_ROOT . '/plugins/content/nuliga/layouts');
         }
 
         // process plugin calls
@@ -120,7 +120,7 @@ class PlgContentNuLiga extends JPlugin
                     else
                     {
                         // error: nothing to render
-                        $app->enqueueMessage(JText::_('COM_NULIGA_NULIGA_RENDERING_FAILURE'), 'warning');
+                        $app->enqueueMessage(JText::_('COM_NULIGA_TABLE_RENDERING_FAILURE'), 'warning');
                     }
                 }
                 else
@@ -170,10 +170,10 @@ class PlgContentNuLiga extends JPlugin
     /**
      * Creates a NuLiga table model instance.
      *
-     * @return NuLigaModelNuLiga NuLiga table model
+     * @return NuLigaModelTable NuLiga table model
      */
     protected static function getModelInstance()
     {
-        return JModelLegacy::getInstance('NuLiga', 'NuLigaModel');
+        return JModelLegacy::getInstance('Table', 'NuLigaModel');
     }
 }
