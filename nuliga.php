@@ -23,9 +23,14 @@ JModelLegacy::addIncludePath(JPATH_SITE.'/components/com_nuliga/models', 'NuLiga
 class PlgContentNuLiga extends JPlugin
 {
     /**
-     * parameter: id
+     * parameter: `team` to enter team mode and specify the team whichs entries are to be injected
      */
-    const PARAM_ID = 'id';
+    const PARAM_TEAM = 'team';
+    
+    /**
+     * parameter: `view` to specify which team entries are to be injected (match schedule, league table)
+     */
+    const PARAM_TEAM_VIEW = 'view';
 
     /**
      * Load the language file on instantiation. Note this is only available in Joomla 3.1 and higher.
@@ -54,7 +59,7 @@ class PlgContentNuLiga extends JPlugin
     */
     function __construct(&$subject, $config) {
       $lang = JFactory::getLanguage();
-      $lang->load( 'com_nuliga', JPATH_SITE );
+      $lang->load('com_nuliga', JPATH_SITE);
 
       parent::__construct($subject, $config);
     }
@@ -84,11 +89,10 @@ class PlgContentNuLiga extends JPlugin
         $matches 		= array();
         $numMatches	= preg_match_all($regex_all, $row->text, $matches,PREG_OFFSET_CAPTURE | PREG_PATTERN_ORDER);
 
-        // initialize if necessary
+        // add component's style directives if necessary
         if ($numMatches)
         {
             JHtml::stylesheet('com_nuliga/nuliga.css', false, true, false);
-            $this->layout = new JLayoutFile('table', JPATH_ROOT . '/plugins/content/nuliga/layouts');
         }
 
         // process plugin calls
@@ -106,74 +110,83 @@ class PlgContentNuLiga extends JPlugin
             }
 
             // load and render table via model
-            if (array_key_exists($this::PARAM_ID, $nuliga_params))
+            if (array_key_exists($this::PARAM_TEAM, $nuliga_params))
             {
-                $model = self::getModelInstance();
-                $table = $model->loadNuLigaTable($nuliga_params[$this::PARAM_ID]);
-                if ($table)
+                if (array_key_exists($this::PARAM_TEAM_VIEW, $nuliga_params))
                 {
-                    $output = $this->renderNuLigaTable($table, $model);
-                    if ($output)
+                    $teamModel = JModelLegacy::getInstance('Team', 'NuLigaModel');
+                    if ($teamModel->loadNuLigaTeam($nuliga_params[$this::PARAM_TEAM]))
                     {
-                        $row->text = preg_replace($regex_all, $output, $row->text, 1);
+                        $output = $this->renderNuLigaTeam($teamModel, $nuliga_params[$this::PARAM_TEAM_VIEW]);
+                        if ($output)
+                        {
+                            $row->text = preg_replace($regex_all, $output, $row->text, 1);
+                        }
+                        else
+                        {
+                            // warn: invalid view
+                            $app->enqueueMessage(JText::sprintf('PLG_CONTENT_NULIGA_TEAM_VIEW_INVALID',
+                                                                $nuliga_params[$this::PARAM_TEAM_VIEW]), 'warning');
+                        }
                     }
                     else
                     {
-                        // error: nothing to render
-                        $app->enqueueMessage(JText::_('COM_NULIGA_TABLE_RENDERING_FAILURE'), 'warning');
+                        // warn: unknown team
+                        $app->enqueueMessage(JText::sprintf('PLG_CONTENT_NULIGA_ERROR_PARAM', $nuliga) . ' '
+                            . JText::sprintf('PLG_CONTENT_NULIGA_TEAM_UNKNOWN', $nuliga_params[$this::PARAM_TEAM]), 'warning'); 
                     }
                 }
                 else
                 {
-                    // error: table unknown
+                    // error: view param missing in team mode
                     $app->enqueueMessage(JText::sprintf('PLG_CONTENT_NULIGA_ERROR_PARAM', $nuliga) . ' '
-                        . JText::sprintf('PLG_CONTENT_NULIGA_TABLE_UNKNOWN', $nuliga_params[$this::PARAM_ID]), 'warning');
+                        . JText::sprintf('PLG_CONTENT_NULIGA_PARAM_MISSING',
+                                         'view',
+                                         JText::_('PLG_CONTENT_NULIGA_PARAM_MISSING_TEAM_VIEW_REASON')), 'error');
                 }
             }
             else
             {
-                // error: table id param missing
+                // error: no param to detect the mode
                 $app->enqueueMessage(JText::sprintf('PLG_CONTENT_NULIGA_ERROR_PARAM', $nuliga) . ' '
-                    . JText::sprintf('PLG_CONTENT_NULIGA_PARAM_MISSING', 'id'), 'error');
+                    . JText::sprintf('PLG_CONTENT_NULIGA_PARAM_MISSING',
+                                     'team',
+                                     JText::_('PLG_CONTENT_NULIGA_PARAM_MISSING_MODE_REASON')), 'error');
             }
         }
 
         return true;
 	}
-
+    
     /**
-     * Renders a NuLiga table with the plugin layout.
+     * Renders a view of a NuLiga team with the appropriate plugin layout.
      *
-     * @param $table JTable NuLiga table
-     * @param $model NuLigaModelNuLiga NuLiga table model to load data from
-     * @return string|null rendering output as HTML or null if nothing to render
+     * @param $teamModel NuLigaModelTeam NuLiga team model
+     * @param $view string view
+     * @return string|boolean rendering output or false if the view is unknown
      */
-    protected function renderNuLigaTable($table, $model)
+    protected function renderNuLigaTeam($teamModel, $view = 'league')
     {
-        // render stored remote data
-        $items = ($table->type == 1) ? $model->getTeams() : $model->getMatches();
-        if ($items)
+        if ($view === 'league')
         {
-            $displayData = array(
-                'type' => $table->type,
-                'items' =>  $items,
+            $this->layout = new JLayoutFile('league', JPATH_ROOT . '/plugins/content/nuliga/layouts');
+            $displayData = [
+                'leagueteams' => $teamModel->getLeagueTeams(),
                 'highlight' => ['TS Bendorf', 'TS Bendorf II', 'TS Bendorf III']
-            );
+            ];
+            return $this->layout->render($displayData);
+        }
+        elseif ($view === 'schedule')
+        {
+            $this->layout = new JLayoutFile('schedule', JPATH_ROOT . '/plugins/content/nuliga/layouts');
+            $displayData = [
+                'matches' => $teamModel->getMatches()
+            ];
             return $this->layout->render($displayData);
         }
         else
         {
-            return null;
+            return false;
         }
-    }
-
-    /**
-     * Creates a NuLiga table model instance.
-     *
-     * @return NuLigaModelTable NuLiga table model
-     */
-    protected static function getModelInstance()
-    {
-        return JModelLegacy::getInstance('Table', 'NuLigaModel');
     }
 }
