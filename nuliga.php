@@ -172,7 +172,7 @@ class PlgContentNuLiga extends JPlugin
             $this->layout = new JLayoutFile('league', JPATH_ROOT . '/plugins/content/nuliga/layouts');
             $displayData = [
                 'leagueteams' => $teamModel->getLeagueTeams(),
-                'highlight' => ['TS Bendorf', 'TS Bendorf II', 'TS Bendorf III']
+                'label' => $teamModel->getTeam()->label
             ];
             return $this->layout->render($displayData);
         }

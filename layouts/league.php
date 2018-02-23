@@ -25,7 +25,7 @@ defined('JPATH_BASE') or die('Restricted access');
                 <th class="pnlg-points"><?php echo JText::_('COM_NULIGA_TABLE_LEAGUE_COLUMN_HEADER_POINTS');?></th>
             </tr>
             <?php foreach($displayData['leagueteams'] as $team): ?>
-                <tr<?php if (in_array($team->name, $displayData['highlight'])) echo ' class="highlight"'; ?>>
+                <tr<?php if ( $team->name === $displayData['label'] ) echo ' class="highlight"'; ?>>
                     <td class="pnlg-rank"><?php echo $team->rank; ?></td>
                     <td class="pnlg-team"><?php echo $team->name; ?></td>
                     <td class="pnlg-num-matches"><?php echo $team->numMatches; ?></td>
