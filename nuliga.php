@@ -169,20 +169,26 @@ class PlgContentNuLiga extends JPlugin
     {
         if ($view === 'league')
         {
-            $this->layout = new JLayoutFile('league', JPATH_ROOT . '/plugins/content/nuliga/layouts');
+            $path = JPluginHelper::getLayoutPath('content', 'nuliga', 'league');
             $displayData = [
                 'leagueteams' => $teamModel->getLeagueTeams(),
                 'label' => $teamModel->getTeam()->label
             ];
-            return $this->layout->render($displayData);
+
+            ob_start();
+            include $path;
+            return ob_get_clean();
         }
         elseif ($view === 'schedule')
         {
-            $this->layout = new JLayoutFile('schedule', JPATH_ROOT . '/plugins/content/nuliga/layouts');
+            $path = JPluginHelper::getLayoutPath('content', 'nuliga', 'schedule');
             $displayData = [
                 'matches' => $teamModel->getMatches()
             ];
-            return $this->layout->render($displayData);
+
+            ob_start();
+            include $path;
+            return ob_get_clean();
         }
         else
         {
