@@ -1,0 +1,40 @@
+version: "3"
+
+services:
+  joomla:
+    image: joomla:latest
+    container_name: "joomla-cms"
+    restart: always
+    environment:
+      JOOMLA_DB_HOST: database
+      JOOMLA_DB_PASSWORD: example
+    ports:
+      - "8080:80"
+    volumes:
+      - ../joomla-cms:/var/www/html
+    depends_on:
+      - joomladb
+    links:
+      - joomladb:database
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: "joomla-phpmyadmin"
+    restart: always
+    environment:
+      PMA_HOST: joomladb
+    ports:
+      - "8081:80"
+    depends_on:
+      - joomladb
+
+  joomladb:
+    image: mysql:5.7
+    container_name: "joomla-mysql"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../joomla-mysql:/var/lib/mysql
